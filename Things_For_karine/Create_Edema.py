@@ -36,8 +36,10 @@ for met_roi_name in mets_rois:
     lower = HU_Dict['Average']
     for i in lower:
         lower = i.Key
+    roi_volume = case.PatientModel.StructureSets[edema_exam].RoiGeometries[met_roi_name].GetRoiVolume()
     upper = 9999
-    case.PatientModel.StructureSets[edema_exam].RoiGeometries[edema_roi_name].CreateGeometryThroughRegionGrowing3D(SeedPoints=[centroid], LowThreshold=lower, HighThreshold=upper,Radius=1.)
+    case.PatientModel.StructureSets[edema_exam].RoiGeometries[edema_roi_name].CreateGeometryThroughRegionGrowing3D(SeedPoints=[centroid], LowThreshold=lower,
+                                                                                                                   HighThreshold=upper,Radius=1.,MaxVolume=100*roi_volume)
     case.PatientModel.StructureSets[edema_exam].SimplifyContours(RoiNames=[edema_roi_name], RemoveHoles3D=True)
     subtract_roi = met_roi_name + '_Peritumeral_Edema_BMA'
     if subtract_roi not in rois_in_case:
