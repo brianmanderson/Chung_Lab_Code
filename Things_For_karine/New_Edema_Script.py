@@ -1,6 +1,4 @@
 __author__ = 'Brian M Anderson'
-# Created on 2/8/2021
-__author__ = 'Brian M Anderson'
 # Created on 1/27/2021
 
 from connect import *
@@ -117,6 +115,7 @@ def mapping_exams(patient, case, secondary_exam, gtv_roi, brain_roi, rois_in_cas
     if '{}_0'.format(threshold_in_brain) in rois_in_case:
         new_rois.append('{}_0'.format(threshold_in_brain))
     else:
+        print(threshold_in_brain)
         case.PatientModel.StructureSets[secondary_exam.Name].RoiGeometries[threshold_in_brain].GetConnectedComponents(MaxVolume=999, MinVolume=0, MaxNumberOfComponents=999)
         rois_in_case = []
         for roi in case.PatientModel.RegionsOfInterest:
@@ -188,10 +187,17 @@ def mapping_exams(patient, case, secondary_exam, gtv_roi, brain_roi, rois_in_cas
                                                                                           'Anterior': 0,
                                                                                           'Posterior': 0, 'Right': 0,
                                                                                           'Left': 0})
-        # for roi in rois_in_case:
-        #     if roi.startswith(threshold_in_brain):
-        #         if int(roi.split(threshold_in_brain)[-1].split('_')[-1]) in range(99):
-        #             case.PatientModel.RegionsOfInterest[roi].DeleteRoi()
+        case.PatientModel.StructureSets[secondary_exam.Name].SimplifyContours(
+            RoiNames=[seed_in_brain], RemoveHoles3D=True, RemoveSmallContours=False,
+            ReduceMaxNumberOfPointsInContours=False, MaxNumberOfPoints=None,
+            CreateCopyOfRoi=False, ResolveOverlappingContours=True)
+        case.PatientModel.RegionsOfInterest['{}_Expanded'.format(gtv_roi)].DeleteRoi()
+        case.PatientModel.RegionsOfInterest['{}_Threshold'.format(gtv_roi)].DeleteRoi()
+        case.PatientModel.RegionsOfInterest['{}_Seed_Grown'.format(gtv_roi)].DeleteRoi()
+        for roi in rois_in_case:
+            if roi.startswith(threshold_in_brain):
+                case.PatientModel.RegionsOfInterest[roi].DeleteRoi()
+
     patient.Save()
 
 
