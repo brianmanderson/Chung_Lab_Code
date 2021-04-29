@@ -10,7 +10,7 @@ a single folder
 """
 First, we need to address the single folder issue
 """
-path = r'H:\failed'
+path = r'Z:\A221208_AllianceTrial\06_Data_Release_For_MD_Anderson'
 separate = False
 if separate:
     from Separate_Files import separate_files_based_on_rows_cols
