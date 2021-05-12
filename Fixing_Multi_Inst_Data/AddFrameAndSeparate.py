@@ -6,7 +6,6 @@ import numpy as np
 import pydicom
 from queue import *
 from threading import Thread
-import copy
 from multiprocessing import cpu_count
 
 
