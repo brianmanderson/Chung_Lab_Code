@@ -14,11 +14,14 @@ def add_frame_and_separate(path):
             continue
         dicom_files = [os.path.join(root, i) for i in files if i.endswith('.dcm')]
         if dicom_files:
+            print(root)
             folder_dict = {}
             for file in dicom_files:
-                print(file)
                 image_reader.SetFileName(file)
-                image_reader.Execute()
+                try:
+                    image_reader.Execute()
+                except:
+                    continue
                 rows_cols = '{}_{}'.format(image_reader.GetMetaData("0028|0010"), image_reader.GetMetaData("0028|0011"))
                 if rows_cols not in folder_dict:
                     folder_dict[rows_cols] = {'files': [], 'uid': None, 'needs_uid': []}
