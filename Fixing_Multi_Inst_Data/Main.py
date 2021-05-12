@@ -29,5 +29,5 @@ Or we could do both combined
 """
 add_frame_and_separate = True
 if add_frame_and_separate:
-    from AddFrameAndSeparate import add_frame_and_separate
-    add_frame_and_separate(path=path)
+    from AddFrameAndSeparate import write_in_parallel
+    write_in_parallel(path=path)
