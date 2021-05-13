@@ -22,7 +22,7 @@ def worker(A):
 
 
 def update_frame_of_ref(root):
-    finished = os.path.join(root, 'Finished2.txt')
+    finished = os.path.join(root, 'Finished.txt')
     folder_dict = {}
     image_reader = sitk.ImageFileReader()
     dicom_files = [os.path.join(root, i) for i in os.listdir(root) if i.endswith('.dcm')]
@@ -57,7 +57,7 @@ def update_frame_of_ref(root):
             for file in folder_dict[key]['files']:
                 file_name = os.path.split(file)[-1]
                 os.rename(file, os.path.join(root, key, file_name))
-            fid = open(os.path.join(root, key, 'Finished2.txt'), 'w+')
+            fid = open(os.path.join(root, key, 'Finished.txt'), 'w+')
             fid.close()
         else:
             fid = open(finished, 'w+')
@@ -67,7 +67,7 @@ def update_frame_of_ref(root):
 def return_paths(path):
     paths_list = []
     for root, dirs, files in os.walk(path):
-        finished = os.path.join(root, 'Finished2.txt')
+        finished = os.path.join(root, 'Finished.txt')
         if os.path.exists(finished):
             continue
         dicom_files = [os.path.join(root, i) for i in files if i.endswith('.dcm')]
