@@ -57,7 +57,7 @@ def update_frame_of_ref(root):
             for file in folder_dict[key]['files']:
                 file_name = os.path.split(file)[-1]
                 os.rename(file, os.path.join(root, key, file_name))
-            fid = open(os.path.join(root, key, 'Finished.txt'), 'w+')
+            fid = open(os.path.join(root, key, 'Finished2.txt'), 'w+')
             fid.close()
         else:
             fid = open(finished, 'w+')
